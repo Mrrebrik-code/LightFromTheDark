@@ -4,8 +4,58 @@ using UnityEngine;
 
 public class UserController : MonoBehaviour
 {
-    void Update()
+    [SerializeField] private PlayerController _playerControl;
+    [SerializeField] bool _keyboardControl;
+
+    private bool _pressedRunRight;
+    private bool _pressedRunLeft;
+    private bool _pressedJump;
+
+    private void FixedUpdate()
     {
-        
+        if (_keyboardControl)
+        {
+            if (Input.GetAxisRaw("Horizontal") != 0)
+                _playerControl.Run(Input.GetAxis("Horizontal") > 0 ? PlayerController.DirectionMove.right : PlayerController.DirectionMove.left);
+            if (Input.GetAxisRaw("Jump") != 0)
+                _playerControl.Jump();
+        }
+        else
+        {
+            if (_pressedRunRight)
+                _playerControl.Run(PlayerController.DirectionMove.right);
+            else if(_pressedRunLeft)
+                _playerControl.Run(PlayerController.DirectionMove.left);
+
+            if(_pressedJump)
+                _playerControl.Jump();
+        }
+    }
+
+    public void OnDownButtonRunRight()
+    {
+        _pressedRunRight = true;
+    }
+    public void OnUpButtonRunRight()
+    {
+        _pressedRunRight = false;
+    }
+
+    public void OnDownButtonRunLeft()
+    {
+        _pressedRunLeft = true;
+    }
+    public void OnUpButtonRunLeft()
+    {
+        _pressedRunLeft = false;
+    }
+
+    public void OnDownButtonJump()
+    {
+        _pressedJump = true;
+    }
+    public void OnUpButtonJump()
+    {
+        _pressedJump = false;
     }
 }
