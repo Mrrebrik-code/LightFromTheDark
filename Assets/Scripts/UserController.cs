@@ -6,6 +6,8 @@ public class UserController : MonoBehaviour
 {
     [SerializeField] private PlayerController _playerControl;
     [SerializeField] bool _keyboardControl;
+    [SerializeField] bool _buttonsControl;
+    [SerializeField] bool _acceletarionControl;
 
     private bool _pressedRunRight;
     private bool _pressedRunLeft;
@@ -13,23 +15,32 @@ public class UserController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_keyboardControl)
-        {
-            if (Input.GetAxisRaw("Horizontal") != 0)
-                _playerControl.Run(Input.GetAxis("Horizontal") > 0 ? PlayerController.DirectionMove.right : PlayerController.DirectionMove.left);
-            if (Input.GetAxisRaw("Jump") != 0)
-                _playerControl.Jump();
-        }
-        else
-        {
-            if (_pressedRunRight)
-                _playerControl.Run(PlayerController.DirectionMove.right);
-            else if(_pressedRunLeft)
-                _playerControl.Run(PlayerController.DirectionMove.left);
 
-            if(_pressedJump)
-                _playerControl.Jump();
-        }
+            if (_keyboardControl)
+            {
+                if (Input.GetAxisRaw("Horizontal") != 0)
+                    _playerControl.Run(Input.GetAxis("Horizontal") > 0 ? PlayerController.DirectionMove.right : PlayerController.DirectionMove.left);
+                if (Input.GetAxisRaw("Jump") != 0)
+                    _playerControl.Jump();
+            }
+            if(_buttonsControl)
+            {
+                if (_pressedRunRight)
+                    _playerControl.Run(PlayerController.DirectionMove.right);
+                else if (_pressedRunLeft)
+                    _playerControl.Run(PlayerController.DirectionMove.left);
+
+                if (_pressedJump)
+                    _playerControl.Jump();
+            }
+            if(_acceletarionControl)
+            {
+                Vector3 acceleration = Input.acceleration;
+                acceleration.z = 0.0f;
+                if(acceleration.magnitude > 0.2f)
+                    _playerControl.AccelerationMove(acceleration);
+            }
+
     }
 
     public void OnDownButtonRunRight()

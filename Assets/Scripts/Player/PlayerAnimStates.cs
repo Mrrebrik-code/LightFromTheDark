@@ -21,7 +21,7 @@ public class PlayerAnimStates : MonoBehaviour
     public enum States
     {
         idle,               //0
-        run,                //1
+        move,               //1
         jump,               //2
         fall,               //3
     }

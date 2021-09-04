@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,10 +11,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce = 5f;    //Сила прыжка 
 
     [Header("Компоненты")]
+    public Flashlight Flashlight;
     [SerializeField] private LayerMask _whatIsSolid;
     [SerializeField] private Transform _transformCheckGround;
 
-    public bool _isGrounded = false;                  //Стоит ли на земле?
+    private bool _isGrounded = false;                  //Стоит ли на земле?
     private float _timeReloadJump = 0.2f;              //Время перарядки прыжка
     private float _timeFall;                           //Время падения
     private bool _jumpLoaded = true;                   //Прыжок заряжен
@@ -50,10 +52,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void Death()
-    {
 
-    }
 
     private void FixedUpdate()
     {
@@ -88,49 +87,60 @@ public class PlayerController : MonoBehaviour
 
     public void Run(DirectionMove direction)
     {
-/*        if (_isGrounded)
+        if (_isGrounded)
         {
-            _animStates.StateChar = AnimStates.States.run;
-            if (!isShooting)
-                _animStates.StateWeap = AnimStates.States.run;
-        }*/
+            _animStates.State = PlayerAnimStates.States.move;
+        }
 
         Vector3 dir = Vector3.right * (int)direction;
 
-        if (dir.x < 0.0f)
-        {
-            _transform.rotation = Quaternion.AngleAxis(180.0f, _transform.up);
-
-        }
-        else
-        {
-            _transform.rotation = Quaternion.AngleAxis(0, _transform.up);
-        }
+        Rotate(direction);
 
         _transform.position = Vector3.Lerp(_transform.position, _transform.position + dir, _moveSpeed * Time.deltaTime);
+    }
+
+    public void AccelerationMove(Vector3 acceleration)
+    {
+        Rotate(acceleration.x > 0f ? DirectionMove.right : DirectionMove.left);
+        _transform.position = Vector3.Lerp(_transform.position, _transform.position + acceleration, _moveSpeed * Time.deltaTime);
     }
 
     public void Jump()
     {
         if (_isGrounded && _jumpLoaded)
         {
-/*            _animStates.StateChar = AnimStates.States.jump;
-            _animStates.StateWeap = AnimStates.States.jump;*/
+            _animStates.State = PlayerAnimStates.States.jump;
             _rb.velocity = new Vector2(0, _jumpForce);
             StartCoroutine("ReloadJump");
         }
     }
+    public void Rotate(DirectionMove direction)
+    {
+        if (direction == DirectionMove.left)
+        {
+            _transform.rotation = Quaternion.AngleAxis(180.0f, _transform.up);
+        }
+        else
+        {
+            _transform.rotation = Quaternion.AngleAxis(0, _transform.up);
+        }
+    }
+
+    public void Death()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     private void CheckGround()
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(_transformCheckGround.position, new Vector3(0.40f, 0.05f, 0.0f), 0f, _whatIsSolid);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(_transformCheckGround.position, new Vector3(1.30f, 0.2f, 1.0f), 0f, _whatIsSolid);
         _isGrounded = colliders.Length > 0;
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(_transformCheckGround.position, new Vector3(1.40f, 0.3f, 1.0f));
+        Gizmos.DrawWireCube(_transformCheckGround.position, new Vector3(1.30f, 0.2f, 1.0f));
     }
 
     IEnumerator ReloadJump()
