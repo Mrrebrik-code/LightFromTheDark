@@ -13,33 +13,65 @@ public class UserController : MonoBehaviour
     private bool _pressedRunLeft;
     private bool _pressedJump;
 
+    private Vector3 _startAcceleration;
+
+
     private void FixedUpdate()
     {
+        if(_startAcceleration == Vector3.zero)
+        {
+            _startAcceleration = Input.acceleration;
+        }
 
-            if (_keyboardControl)
+        if (_keyboardControl)
+        {
+            if (Input.GetAxisRaw("Horizontal") != 0)
+                _playerControl.Run(Input.GetAxis("Horizontal") > 0 ? PlayerController.DirectionMove.right : PlayerController.DirectionMove.left);
+            if (Input.GetAxisRaw("Jump") != 0)
             {
-                if (Input.GetAxisRaw("Horizontal") != 0)
-                    _playerControl.Run(Input.GetAxis("Horizontal") > 0 ? PlayerController.DirectionMove.right : PlayerController.DirectionMove.left);
-                if (Input.GetAxisRaw("Jump") != 0)
+                if (_playerControl.InClimpbingZone)
+                    _playerControl.IsClipmbing = true;
+                else
                     _playerControl.Jump();
             }
-            if(_buttonsControl)
+            else
             {
-                if (_pressedRunRight)
-                    _playerControl.Run(PlayerController.DirectionMove.right);
-                else if (_pressedRunLeft)
-                    _playerControl.Run(PlayerController.DirectionMove.left);
+                if (_playerControl.InClimpbingZone)
+                    _playerControl.IsClipmbing = false;
+            }
+        }
+        if(_buttonsControl)
+        {
+            if (_pressedRunRight)
+                _playerControl.Run(PlayerController.DirectionMove.right);
+            else if (_pressedRunLeft)
+                _playerControl.Run(PlayerController.DirectionMove.left);
 
-                if (_pressedJump)
-                    _playerControl.Jump();
-            }
-            if(_acceletarionControl)
+            if (_pressedJump)
             {
-                Vector3 acceleration = Input.acceleration;
-                acceleration.z = 0.0f;
-                if(acceleration.magnitude > 0.2f)
-                    _playerControl.AccelerationMove(acceleration);
+                _playerControl.Jump();
+                _pressedJump = false;
             }
+        }
+        if(_acceletarionControl)
+        {
+            float her;
+            Vector3 acceleration = Input.acceleration;
+            Vector3 dir = acceleration - _startAcceleration;
+            if (Mathf.Abs(dir.y) > Mathf.Abs(dir.z))
+                her = Mathf.Abs(dir.y);
+            else
+                her = Mathf.Abs(dir.z);
+            if (dir.y < 0)
+                her *= -1;
+            Debug.Log(her);
+
+            acceleration.z = 0;
+            acceleration.y = her;
+
+            if (acceleration.magnitude > 0.2f)
+                _playerControl.AccelerationMove(acceleration);
+        }
 
     }
 

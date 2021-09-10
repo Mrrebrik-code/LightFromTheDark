@@ -45,6 +45,6 @@ public class LevelItem : MonoBehaviour
 
     public void OnClickButtonLevel()
     {
-        SceneManager.LoadScene("Level_"+ numLevel);
+        SceneManager.LoadScene("Level_" + numLevel);
     }
 }

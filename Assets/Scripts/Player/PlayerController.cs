@@ -7,12 +7,15 @@ public class PlayerController : MonoBehaviour
 {
 
     [Header("Характеристики")]
-    [SerializeField] private float _moveSpeed = 3f;    //Скорость движения
-    [SerializeField] private float _jumpForce = 5f;    //Сила прыжка 
+    [SerializeField] private float _moveSpeed;          //Скорость движения
+    [SerializeField] private float _moveClimping;       //Скорость поднятия по лестнице
+    [SerializeField] private float _moveDescent;        //Скорость поднятия по лестнице
+    [SerializeField] private float _moveFlight;         //Скорость полёта на шарике
+    [SerializeField] private float _jumpForce;          //Сила прыжка 
 
     [Header("Компоненты")]
     public Flashlight Flashlight;
-    [SerializeField] private LayerMask _whatIsSolid;
+    [SerializeField] private LayerMask _layerSolid;
     [SerializeField] private Transform _transformCheckGround;
 
     private bool _isGrounded = false;                  //Стоит ли на земле?
@@ -28,8 +31,11 @@ public class PlayerController : MonoBehaviour
     private PlayerAnimStates _animStates;
 
 
-    [HideInInspector]
-    public Vector3 Velocity;                          //Скорость игрока
+    [HideInInspector] public Vector3 Velocity;                          //Скорость игрока
+    [HideInInspector] public int CountJumps { private set; get; }
+    [HideInInspector] public bool InClimpbingZone;
+    [HideInInspector] public bool IsClipmbing;
+    [HideInInspector] public bool IsFlightToBalloon;
 
     public enum DirectionMove
     {
@@ -47,18 +53,20 @@ public class PlayerController : MonoBehaviour
         _animStates = GetComponent<PlayerAnimStates>();
     }
 
-    private void Start()
-    {
-
-    }
-
-
 
     private void FixedUpdate()
     {
         Velocity = (transform.position - _lastPosition) / Time.fixedDeltaTime;
 
         CheckGround();
+        if(InClimpbingZone)
+        {
+            MoveClimpbing();
+        }
+        if(IsFlightToBalloon)
+        {
+            MoveBalloon();
+        }
 
         if (_isGrounded || Mathf.Abs(Velocity.y) < 0.1)
         {
@@ -112,8 +120,21 @@ public class PlayerController : MonoBehaviour
             _animStates.State = PlayerAnimStates.States.jump;
             _rb.velocity = new Vector2(0, _jumpForce);
             StartCoroutine("ReloadJump");
+            CountJumps += 1;
         }
     }
+
+    public void MoveClimpbing()
+    {
+        Vector3 dir = Vector3.up * (IsClipmbing ? 1 : -1);
+        _transform.position = Vector3.Lerp(_transform.position, _transform.position + dir, (IsClipmbing ? _moveClimping : _moveDescent) * Time.deltaTime);
+    }
+
+    public void MoveBalloon()
+    {
+        _transform.position = Vector3.Lerp(_transform.position, _transform.position + Vector3.up, _moveFlight* Time.deltaTime);
+    }
+
     public void Rotate(DirectionMove direction)
     {
         if (direction == DirectionMove.left)
@@ -133,14 +154,40 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(_transformCheckGround.position, new Vector3(1.30f, 0.2f, 1.0f), 0f, _whatIsSolid);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(_transformCheckGround.position, new Vector3(0.7f, 0.2f, 1.0f), 0f, _layerSolid);
         _isGrounded = colliders.Length > 0;
     }
+
+    public void OnEnterClimpingZone()
+    {
+        InClimpbingZone = true;
+        _rb.velocity = new Vector2(0, 0);
+        _rb.gravityScale = 0;
+    }
+    public void OnExitClimpingZone()
+    {
+        InClimpbingZone = false;
+        _rb.gravityScale = 5;
+    }
+
+
+    public void OnStartBallonMove()
+    {
+        IsFlightToBalloon = true;
+        _rb.velocity = new Vector2(0, 0);
+        _rb.gravityScale = 0;
+    }
+    public void OnEndBallonMove()
+    {
+        IsFlightToBalloon = false;
+        _rb.gravityScale = 5;
+    }
+
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(_transformCheckGround.position, new Vector3(1.30f, 0.2f, 1.0f));
+        Gizmos.DrawWireCube(_transformCheckGround.position, new Vector3(0.7f, 0.2f, 1.0f));
     }
 
     IEnumerator ReloadJump()

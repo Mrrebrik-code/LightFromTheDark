@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    [Header("Кнопка Играть")]
     [SerializeField] private GameObject _listOfLevelsObj;
     [SerializeField] private GameObject _sceneObj;
 
@@ -13,6 +12,12 @@ public class MainMenu : MonoBehaviour
         _sceneObj.SetActive(false);
         _listOfLevelsObj.SetActive(true);
     }
+
+    public void OnClickButtonSettings()
+    {
+
+    }
+
     public void OnClickButtonExit()
     {
         PlayerPrefs.DeleteAll();
