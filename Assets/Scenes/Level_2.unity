@@ -205,6 +205,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level
       objectReference: {fileID: 0}
+    - target: {fileID: 4433010713620400669, guid: a353673f80948034891adc6b7f3a0a8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a353673f80948034891adc6b7f3a0a8e, type: 3}
 --- !u!1 &519420028
@@ -332,6 +337,11 @@ PrefabInstance:
     - target: {fileID: 3176561600391558285, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
         type: 3}
       propertyPath: m_Delegates.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3176561600391558285, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3176561600391558285, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
@@ -368,6 +378,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3176561600391558285, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3176561600391558285, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3176561600391558285, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4811383545956462508, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
         type: 3}

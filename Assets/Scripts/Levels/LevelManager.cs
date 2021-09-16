@@ -12,8 +12,6 @@ public class LevelManager : MonoBehaviour
     //public IPassing Passing { private get; set; }
     public Level Level;
     [HideInInspector] public bool IsPassed = false;
-
-    [SerializeField] private GameObject _finishZone;
     [SerializeField] private Door _door;
     
 
@@ -34,6 +32,14 @@ public class LevelManager : MonoBehaviour
             Level = new Level_6();
         else if (SceneManager.GetActiveScene().name == "Level_7")
             Level = new Level_7();
+        else if (SceneManager.GetActiveScene().name == "Level_8")
+            Level = new Level_8();
+        else if (SceneManager.GetActiveScene().name == "Level_9")
+            Level = new Level_9();
+        else if (SceneManager.GetActiveScene().name == "Level_10")
+            Level = new Level_10();
+        else if (SceneManager.GetActiveScene().name == "Level_11")
+            Level = new Level_11();
     }
 
     private void Update()
@@ -42,7 +48,6 @@ public class LevelManager : MonoBehaviour
         {
             IsPassed = true;
             _door.Opening();
-            _finishZone.SetActive(true);
         }
     }
 }
@@ -148,6 +153,81 @@ class Level_7 : Level
 {
     override public bool Passed()
     {
+        return false;
+    }
+}
+
+class Level_8 : Level
+{
+    override public bool Passed()
+    {
+        return true;
+    }
+}
+
+class Level_9 : Level
+{
+    override public bool Passed()
+    {
+        if (SystemInfo.batteryStatus == BatteryStatus.Charging)
+            return true;
+
+        return false;
+    }
+}
+
+class Level_10 : Level
+{
+    private LevelButton _button;
+    private Wires _wires;
+
+    public Level_10()
+    {
+        _button = GameObject.FindWithTag("LevelButton").GetComponent<LevelButton>();
+        _wires = Object.FindObjectOfType<Wires>();
+    }
+
+    override public bool Passed()
+    {
+        if (_button.IsActive && _wires.IsRepaired)
+            return true;
+
+        return false;
+    }
+}
+
+class Level_11 : Level
+{
+    private LevelButton _button;
+
+    public Level_11()
+    {
+        _button = GameObject.FindWithTag("LevelButton").GetComponent<LevelButton>();
+    }
+
+    override public bool Passed()
+    {
+        if (_button.IsActive)
+            return true;
+
+        return false;
+    }
+}
+
+class Level_12 : Level
+{
+    private LevelButton _button;
+
+    public Level_12()
+    {
+        _button = GameObject.FindWithTag("LevelButton").GetComponent<LevelButton>();
+    }
+
+    override public bool Passed()
+    {
+        if (_button.IsActive)
+            return true;
+
         return false;
     }
 }

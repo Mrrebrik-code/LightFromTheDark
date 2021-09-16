@@ -246,7 +246,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsPassed: 0
-  _finishZone: {fileID: 1208462592531623772}
   _door: {fileID: 6121837391136355904}
 --- !u!1 &1208462592180733969
 GameObject:
@@ -1254,7 +1253,7 @@ PrefabInstance:
     - target: {fileID: 524436674874130533, guid: 519b0ee2f65933d428629fd6166b8be9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 0.24000025
       objectReference: {fileID: 0}
     - target: {fileID: 524436674874130533, guid: 519b0ee2f65933d428629fd6166b8be9,
         type: 3}
@@ -1961,7 +1960,7 @@ PrefabInstance:
     - target: {fileID: 2891279754070655206, guid: ff9b744b38cafa14299aced8c28f3c4b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.95
+      value: 3.19
       objectReference: {fileID: 0}
     - target: {fileID: 2891279754070655206, guid: ff9b744b38cafa14299aced8c28f3c4b,
         type: 3}

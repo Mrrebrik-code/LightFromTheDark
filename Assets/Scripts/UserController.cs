@@ -49,8 +49,18 @@ public class UserController : MonoBehaviour
 
             if (_pressedJump)
             {
-                _playerControl.Jump();
-                _pressedJump = false;
+                if (_playerControl.InClimpbingZone)
+                    _playerControl.IsClipmbing = true;
+                else
+                {
+                    _playerControl.Jump();
+                    _pressedJump = false;
+                }
+            }
+            else
+            {
+                if (_playerControl.InClimpbingZone)
+                    _playerControl.IsClipmbing = false;
             }
         }
         if(_acceletarionControl)
@@ -64,7 +74,6 @@ public class UserController : MonoBehaviour
                 her = Mathf.Abs(dir.z);
             if (dir.y < 0)
                 her *= -1;
-            Debug.Log(her);
 
             acceleration.z = 0;
             acceleration.y = her;

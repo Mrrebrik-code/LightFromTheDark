@@ -17,8 +17,13 @@ public class PlayerController : MonoBehaviour
     public Flashlight Flashlight;
     [SerializeField] private LayerMask _layerSolid;
     [SerializeField] private Transform _transformCheckGround;
+    [SerializeField] private AudioSource _audioStep;
+    [SerializeField] private AudioClip _audioStepClip;
+    [SerializeField] private AudioSource _heartBeat;
+    [SerializeField] private AnimationCurve _heartBeatCurve;
 
     private bool _isGrounded = false;                  //Стоит ли на земле?
+    private bool _isHeartBeating;                      //Сердце бьётся?
     private float _timeReloadJump = 0.2f;              //Время перарядки прыжка
     private float _timeFall;                           //Время падения
     private bool _jumpLoaded = true;                   //Прыжок заряжен
@@ -52,6 +57,11 @@ public class PlayerController : MonoBehaviour
         _transform = GetComponent<Transform>();
         _animStates = GetComponent<PlayerAnimStates>();
     }
+    private void Update()
+    {
+        if (_isHeartBeating == false)
+            StartCoroutine(HeartBeat());
+    }
 
 
     private void FixedUpdate()
@@ -63,23 +73,25 @@ public class PlayerController : MonoBehaviour
         {
             MoveClimpbing();
         }
-        if(IsFlightToBalloon)
+        if (IsFlightToBalloon)
         {
             MoveBalloon();
         }
-
-        if (_isGrounded || Mathf.Abs(Velocity.y) < 0.1)
+        else
         {
-            _animStates.State = PlayerAnimStates.States.idle;
-            _animStates.State = PlayerAnimStates.States.idle;
-        }
-        else if (Velocity.y > 0.1)
-        {
-            _animStates.State = PlayerAnimStates.States.jump;
-        }
-        else if (Velocity.y < -0.1)
-        {
-            _animStates.State = PlayerAnimStates.States.fall;
+            if (_isGrounded || Mathf.Abs(Velocity.y) < 0.1)
+            {
+                _animStates.State = PlayerAnimStates.States.idle;
+                _animStates.State = PlayerAnimStates.States.idle;
+            }
+            else if (Velocity.y > 0.1)
+            {
+                _animStates.State = PlayerAnimStates.States.jump;
+            }
+            else if (Velocity.y < -0.1)
+            {
+                _animStates.State = PlayerAnimStates.States.fall;
+            }
         }
 
         //Начисление время падения
@@ -105,6 +117,12 @@ public class PlayerController : MonoBehaviour
         Rotate(direction);
 
         _transform.position = Vector3.Lerp(_transform.position, _transform.position + dir, _moveSpeed * Time.deltaTime);
+    }
+
+    private void MakeStep()
+    {
+        _audioStep.pitch = Random.Range(0.8f, 1f);
+        _audioStep.PlayOneShot(_audioStepClip);
     }
 
     public void AccelerationMove(Vector3 acceleration)
@@ -133,6 +151,7 @@ public class PlayerController : MonoBehaviour
     public void MoveBalloon()
     {
         _transform.position = Vector3.Lerp(_transform.position, _transform.position + Vector3.up, _moveFlight* Time.deltaTime);
+        _animStates.State = PlayerAnimStates.States.flight; 
     }
 
     public void Rotate(DirectionMove direction)
@@ -154,7 +173,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(_transformCheckGround.position, new Vector3(0.7f, 0.2f, 1.0f), 0f, _layerSolid);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(_transformCheckGround.position, new Vector3(0.9f, 0.6f, 1.0f), 0f, _layerSolid);
         _isGrounded = colliders.Length > 0;
     }
 
@@ -183,11 +202,25 @@ public class PlayerController : MonoBehaviour
         _rb.gravityScale = 5;
     }
 
+    IEnumerator HeartBeat()
+    {
+        float timeBtwnBeat = 0f;
+        while (true)
+        {
+            Debug.Log(1 - Flashlight.EnergyTimePercents / 100);
+            _isHeartBeating = true;
+            _heartBeat.pitch = Random.Range(0.9f, 1f);
+            _heartBeat.Play();
+            timeBtwnBeat = _heartBeatCurve.Evaluate(1 - Flashlight.EnergyTimePercents / 100);
+            yield return new WaitForSeconds(timeBtwnBeat);
+        }
+    }
+
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(_transformCheckGround.position, new Vector3(0.7f, 0.2f, 1.0f));
+        Gizmos.DrawWireCube(_transformCheckGround.position, new Vector3(0.9f, 0.6f, 1.0f));
     }
 
     IEnumerator ReloadJump()

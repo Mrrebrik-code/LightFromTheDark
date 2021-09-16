@@ -21,7 +21,13 @@ public class FinishZone : MonoBehaviour
             {
                 PlayerPrefs.SetFloat(nameLevelTime, newTimeLevel);
             }
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            if(SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            else
+            {
+                FindObjectOfType<SoundLevel>().GetComponent<SoundLevel>().DestroyObject();
+                SceneManager.LoadScene(0);
+            }
         }
     }
 }

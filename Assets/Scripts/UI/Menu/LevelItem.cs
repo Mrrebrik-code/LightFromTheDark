@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class LevelItem : MonoBehaviour
 {
     private int numLevel;
+    [SerializeField] private GameObject _soundLevel;
     [SerializeField] private GameObject _buttonObj;
     [SerializeField] private Text _text;
     [SerializeField] private Sprite _buttonOpenSprite;
@@ -46,5 +47,6 @@ public class LevelItem : MonoBehaviour
     public void OnClickButtonLevel()
     {
         SceneManager.LoadScene("Level_" + numLevel);
+        Instantiate(_soundLevel);
     }
 }

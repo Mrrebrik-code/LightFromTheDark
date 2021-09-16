@@ -501,6 +501,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cde78f563a8ca24fa239ecfaa73e130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _soundLevel: {fileID: 8909757654306373276, guid: 2d1b60a838fddd5499c07ce47efea57c,
+    type: 3}
   _buttonObj: {fileID: 8832778989909449631}
   _text: {fileID: 525510635895100930}
   _buttonOpenSprite: {fileID: 21300000, guid: 186cef224530fda41a1e0dcb3a60eab2, type: 3}

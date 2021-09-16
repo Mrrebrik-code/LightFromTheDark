@@ -6,8 +6,14 @@ public class Flashlight : MonoBehaviour
 {
     //Максимальное время заряда
     [SerializeField] private float _maxEnergyTime;
+    [SerializeField] private PlayerController _playerContr;
+
     //Текущее время заряда 
-    public float EnergyTime;
+    public float EnergyTime { get; private set; }
+    public float EnergyTimePercents 
+    { 
+        get{ return EnergyTime / _maxEnergyTime * 100f; }
+    }
 
     private void Awake()
     {
@@ -20,7 +26,9 @@ public class Flashlight : MonoBehaviour
         {
             EnergyTime -= Time.deltaTime;
             if (EnergyTime < 0.0f)
-                EnergyTime = 0.0f;
+            {
+                _playerContr.Death();
+            }
         }
     }
 
