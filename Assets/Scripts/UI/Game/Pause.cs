@@ -41,4 +41,12 @@ public class Pause : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+
+    public void OnClickSkipLevel()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        GameObject finishZone = FindObjectOfType<FinishZone>().gameObject;
+        player.transform.position = finishZone.transform.position;
+    }
+
 }

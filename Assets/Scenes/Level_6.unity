@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -350,13 +350,7 @@ PrefabInstance:
     - target: {fileID: 1710238460066659490, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
         type: 3}
       propertyPath: m_Text
-      value: "\u044D\u0442\u043E\u0439 \u043B\u0435\u0441\u0442\u043D\u0438\u0446\u044B
-        \u0440\u0430\u043D\u044C\u0448\u0435 \u043D\u0435 \u0431\u044B\u043B\u043E"
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311418786149867983, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -170
+      value: "\u0412\u044B\u0448\u0435"
       objectReference: {fileID: 0}
     - target: {fileID: 3176561600391558285, guid: 22b6b11ad29415b44ac7d1cf79b5c1c5,
         type: 3}
@@ -946,7 +940,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1156,7 +1150,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1528,7 +1522,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1682,7 +1676,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1916,11 +1910,101 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.502
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 3.5076034
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_LightType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_ShapeLightParametricSides
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_ShapeLightParametricAngleOffset
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_ShapeLightFalloffOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_ShapeLightFalloffOffset.y
+      value: -1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_ShapeLightFalloffSize
+      value: 4.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_LightCookieSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776795406199968736, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932909765145848828, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3417633186066266142, guid: 5e70b03660156d7458ce3c830f4159bc,
         type: 3}
       propertyPath: _moveSpeed
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 4819717789258393837, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4819717789258393837, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4819717789258393837, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.056681864
+      objectReference: {fileID: 0}
+    - target: {fileID: 4819717789258393837, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99839234
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632319920087572538, guid: 5e70b03660156d7458ce3c830f4159bc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 7632319921415074677, guid: 5e70b03660156d7458ce3c830f4159bc,
         type: 3}
       propertyPath: m_GravityScale

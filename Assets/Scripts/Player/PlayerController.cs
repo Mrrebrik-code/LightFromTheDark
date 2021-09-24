@@ -19,11 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _transformCheckGround;
     [SerializeField] private AudioSource _audioStep;
     [SerializeField] private AudioClip _audioStepClip;
-    [SerializeField] private AudioSource _heartBeat;
-    [SerializeField] private AnimationCurve _heartBeatCurve;
 
     private bool _isGrounded = false;                  //Стоит ли на земле?
-    private bool _isHeartBeating;                      //Сердце бьётся?
     private float _timeReloadJump = 0.2f;              //Время перарядки прыжка
     private float _timeFall;                           //Время падения
     private bool _jumpLoaded = true;                   //Прыжок заряжен
@@ -57,12 +54,6 @@ public class PlayerController : MonoBehaviour
         _transform = GetComponent<Transform>();
         _animStates = GetComponent<PlayerAnimStates>();
     }
-    private void Update()
-    {
-        if (_isHeartBeating == false)
-            StartCoroutine(HeartBeat());
-    }
-
 
     private void FixedUpdate()
     {
@@ -200,20 +191,6 @@ public class PlayerController : MonoBehaviour
     {
         IsFlightToBalloon = false;
         _rb.gravityScale = 5;
-    }
-
-    IEnumerator HeartBeat()
-    {
-        float timeBtwnBeat = 0f;
-        while (true)
-        {
-            Debug.Log(1 - Flashlight.EnergyTimePercents / 100);
-            _isHeartBeating = true;
-            _heartBeat.pitch = Random.Range(0.9f, 1f);
-            _heartBeat.Play();
-            timeBtwnBeat = _heartBeatCurve.Evaluate(1 - Flashlight.EnergyTimePercents / 100);
-            yield return new WaitForSeconds(timeBtwnBeat);
-        }
     }
 
 

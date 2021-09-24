@@ -178,20 +178,13 @@ class Level_9 : Level
 
 class Level_10 : Level
 {
-    private LevelButton _button;
-    private Wires _wires;
-
     public Level_10()
     {
-        _button = GameObject.FindWithTag("LevelButton").GetComponent<LevelButton>();
-        _wires = Object.FindObjectOfType<Wires>();
+
     }
 
     override public bool Passed()
     {
-        if (_button.IsActive && _wires.IsRepaired)
-            return true;
-
         return false;
     }
 }
