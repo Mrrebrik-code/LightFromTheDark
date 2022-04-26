@@ -134,17 +134,23 @@ class Level_5 : Level
 
     override public bool Passed()
     {
-        if (_button.IsActive)
-            return true;
-
         return false;
     }
 }
 
 class Level_6 : Level
 {
+    private Lever _lever;
+    private LevelButton _button;
+
+    public Level_6()
+	{
+        _lever = GameObject.FindWithTag("Lever").GetComponent<Lever>();
+        _button = GameObject.FindWithTag("LevelButton").GetComponent<LevelButton>();
+    }
     override public bool Passed()
     {
+        if (_lever.IsActive && _button.IsActive) return true;
         return false;
     }
 }

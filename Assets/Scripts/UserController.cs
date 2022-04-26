@@ -27,12 +27,17 @@ public class UserController : MonoBehaviour
         {
             if (Input.GetAxisRaw("Horizontal") != 0)
                 _playerControl.Run(Input.GetAxis("Horizontal") > 0 ? PlayerController.DirectionMove.right : PlayerController.DirectionMove.left);
-            if (Input.GetAxisRaw("Jump") != 0)
+            if (Input.GetAxis("Jump") != 0)
             {
+                Debug.Log("Test");
                 if (_playerControl.InClimpbingZone)
                     _playerControl.IsClipmbing = true;
-                else
+				else
+				{
                     _playerControl.Jump();
+                    _pressedJump = false;
+                }
+                    
             }
             else
             {
@@ -62,24 +67,6 @@ public class UserController : MonoBehaviour
                 if (_playerControl.InClimpbingZone)
                     _playerControl.IsClipmbing = false;
             }
-        }
-        if(_acceletarionControl)
-        {
-            float her;
-            Vector3 acceleration = Input.acceleration;
-            Vector3 dir = acceleration - _startAcceleration;
-            if (Mathf.Abs(dir.y) > Mathf.Abs(dir.z))
-                her = Mathf.Abs(dir.y);
-            else
-                her = Mathf.Abs(dir.z);
-            if (dir.y < 0)
-                her *= -1;
-
-            acceleration.z = 0;
-            acceleration.y = her;
-
-            if (acceleration.magnitude > 0.2f)
-                _playerControl.AccelerationMove(acceleration);
         }
 
     }

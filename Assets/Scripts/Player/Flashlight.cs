@@ -33,15 +33,6 @@ public class Flashlight : MonoBehaviour
         _energyStartBlinking = Random.Range(_maxEnergyTime/2f, _maxEnergyTime/4f);
     }
 
-    private void Update()
-    {
-        DecreaseInCharge();
-        if(_isBlinked == false && EnergyTime < _energyStartBlinking)
-        {
-            StartCoroutine(Blinking());
-        }
-    }
-
     private void DecreaseInCharge()
     {
         if (EnergyTime > 0.0f)

@@ -131,6 +131,12 @@ public class PlayerController : MonoBehaviour
             StartCoroutine("ReloadJump");
             CountJumps += 1;
         }
+
+		if (IsClipmbing)
+		{
+            MoveClimpbing();
+
+        }
     }
 
     public void MoveClimpbing()

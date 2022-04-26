@@ -98,8 +98,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _test: 0
-  _energyStartBlinking: 0
 --- !u!212 &8162146660890734729
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -421,7 +419,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.6
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.70173746, b: 0, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
