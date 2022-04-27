@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
@@ -13,8 +10,10 @@ public class LevelManager : MonoBehaviour
     public Level Level;
     [HideInInspector] public bool IsPassed = false;
     [SerializeField] private Door _door;
-    
+    [SerializeField] private Door _door2;
 
+
+   
 
     private void Start()
     {
@@ -33,13 +32,17 @@ public class LevelManager : MonoBehaviour
         else if (SceneManager.GetActiveScene().name == "Level_7")
             Level = new Level_7();
         else if (SceneManager.GetActiveScene().name == "Level_8")
-            Level = new Level_8();
+            Level = new Level_8(_door2);
         else if (SceneManager.GetActiveScene().name == "Level_9")
             Level = new Level_9();
         else if (SceneManager.GetActiveScene().name == "Level_10")
             Level = new Level_10();
         else if (SceneManager.GetActiveScene().name == "Level_11")
             Level = new Level_11();
+
+
+
+
     }
 
     private void Update()
@@ -165,9 +168,29 @@ class Level_7 : Level
 
 class Level_8 : Level
 {
+    private Key _key;
+    private LevelButton _button;
+    private Lever _lever;
+    private Door _door2;
+    private bool isOpenDoor2 = false;
+	public Level_8(object door)
+	{
+        _door2 = door as Door;
+        _key = GameObject.FindWithTag("Key").GetComponent<Key>();
+        _lever = GameObject.FindWithTag("Lever").GetComponent<Lever>();
+        _button = GameObject.FindWithTag("LevelButton").GetComponent<LevelButton>();
+        
+    }
     override public bool Passed()
     {
-        return true;
+        if(_key == null && isOpenDoor2 == false)
+		{
+            isOpenDoor2 = true;
+            _door2.Opening();
+        }
+
+        if (_lever.IsActive && _button.IsActive) return true;
+        return false;
     }
 }
 
